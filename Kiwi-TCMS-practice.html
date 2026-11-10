@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Учебная корзина</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; padding: 44px 20px; background: #f0f4f8; color: #182639; font: 16px/1.5 system-ui, sans-serif; }
+main { max-width: 630px; margin: auto; padding: 28px 34px; background: #fff; border: 1px solid #d7e1ed; border-radius: 18px; }
+small { color: #425b79; font-weight: 650; }
+h1 { margin: 4px 0 14px; font-size: 33px; line-height: 1.15; }
+p { margin: 10px 0; }
+.spec { border-left: 4px solid #3c60ad; background: #edf3ff; padding: 10px 14px; margin: 15px 0; }
+.line { display: flex; justify-content: space-between; gap: 14px; }
+label { display: block; font-weight: 650; }
+form { margin: 16px 0 8px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
+input, button { border: 1px solid #647890; border-radius: 7px; padding: 8px 12px; font: inherit; }
+input { flex: 1; min-width: 120px; }
+button { background: #22488f; border-color: #22488f; color: white; cursor: pointer; }
+output { display: block; min-height: 24px; }
+.total { border-top: 1px solid #d7e1ed; padding-top: 10px; font-size: 22px; font-weight: 750; }
+</style>
+</head>
+<body>
+<main>
+<small>ТРЕНАЖЁР РУЧНОГО ТЕСТИРОВАНИЯ · v1.0-demo</small>
+<h1>Учебная корзина</h1>
+<p class="spec"><strong>Требование.</strong> Промокод STUDENT10 уменьшает стоимость корзины на 10%.</p>
+<p class="line"><span>Рюкзак × 1</span><strong>1 000 ₽</strong></p>
+<form id="promo">
+  <label for="code">Промокод</label>
+  <div class="row">
+    <input id="code" name="code" autocomplete="off" placeholder="Введите промокод">
+    <button type="submit">Применить</button>
+  </div>
+</form>
+<output id="result" for="code" aria-live="polite"></output>
+<p class="line total"><span>Итого</span><span id="total">1 000 ₽</span></p>
+</main>
+<script>
+const form = document.querySelector('#promo');
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const accepted = form.elements.code.value.trim() === 'STUDENT10';
+  document.querySelector('#result').textContent = accepted ? 'Промокод применён' : 'Промокод не найден';
+  // Deliberate exercise defect: the valid code deducts 50 rubles instead of 100.
+  document.querySelector('#total').textContent = accepted ? '950 ₽' : '1 000 ₽';
+});
+</script>
+</body>
+</html>
